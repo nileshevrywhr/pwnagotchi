@@ -3,9 +3,9 @@
     {
       "name": "pwnagotchi",
       "type": "arm-image",
-      "iso_url": "https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-07-12/2019-07-10-raspbian-buster-lite.zip",
-      "iso_checksum": "9e5cf24ce483bb96e7736ea75ca422e3560e7b455eee63dd28f66fa1825db70e",
-      "last_partition_extra_size": 3221225472
+      "iso_url": "https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2022-09-26/2022-09-22-raspios-buster-armhf-lite.img.xz",
+      "iso_checksum": "1137a22085b821da7395ed8a4eb4ac65b7835bbe",
+      "target_image_size": 5368709120
     }
   ],
   "provisioners": [
@@ -15,6 +15,8 @@
         "sed -i 's/^\\([^#]\\)/#\\1/g' /etc/ld.so.preload",
         "dpkg-architecture",
         "apt-get -y update",
+        "sed -i 's/buster/oldstable/g' /etc/apt/sources.list",
+        "apt-get -y --allow-releaseinfo-change update",
         "apt-get install -y ansible"
       ]
     },

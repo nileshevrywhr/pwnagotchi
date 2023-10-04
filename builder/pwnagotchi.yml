@@ -49,6 +49,7 @@
           - firmware-realtek
         remove:
           - raspberrypi-net-mods
+          - raspberrypi-bootloader
           - dhcpcd5
           - triggerhappy
           - wpa_supplicant
@@ -126,6 +127,23 @@
       dest: /lib/systemd/system/bluetooth.service
       regexp: '^ExecStart=/usr/lib/bluetooth/bluetoothd$'
       line: 'ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=sap'
+      state: present
+
+  - name: Update Raspbian keyring
+    apt:
+      name: raspbian-archive-keyring
+      state: latest
+      update_cache: yes
+
+  - name: Update Kali Archive GPG key
+    apt_key:
+      url: https://archive.kali.org/archive-key.asc
+      state: present
+
+  - name: Import re4son-kernel GPG key
+    apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: 11764EE8AC24832F
       state: present
 
   - name: Add re4son-kernel repo key
